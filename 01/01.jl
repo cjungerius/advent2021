@@ -2,7 +2,7 @@ function depth(input)
     depth = input[1]
     increases = 0
     for i in input[2:end]
-        increases += newdepth > depth
+        increases += i > depth
         depth = i
     end     
     increases  
