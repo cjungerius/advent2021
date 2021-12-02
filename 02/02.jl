@@ -35,10 +35,7 @@ function dive_aim(input)
     x*y
 end
 
+input = readlines("input.txt")
 
-f = open(ARGS[1]);
-input = readlines(f)
-close(f)
-
-println(dive(input))
-println(dive_aim(input))
+dive(input)
+dive_aim(input)

@@ -7,9 +7,7 @@ function windowdepth(input)
     depth(input)
 end
 
+input = parse.(Int64,readlines("input.txt"))
 
-f = open(ARGS[1]);
-input = parse.(Int64,readlines(f))
-close(f)
-println(depth(input))
-println(windowdepth(input))
+depth(input)
+windowdepth(input)
