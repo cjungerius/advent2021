@@ -3,12 +3,13 @@ function dive(input)
     y = 0
     for i in input
         instruction = split(i," ")
+        value = parse(Int,instruction[2])
         if instruction[1]=="forward"
-            x += parse(Int,instruction[2])
+            x += value
         elseif instruction[1]=="down"
-            y += parse(Int,instruction[2])
+            y += value
         elseif instruction[1]=="up"
-            y -= parse(Int,instruction[2])
+            y -= value
         end
     end
     x*y
@@ -21,13 +22,14 @@ function dive_aim(input)
     aim = 0
     for i in input
         instruction = split(i," ")
+        value = parse(Int,instruction[2])
         if instruction[1]=="forward"
-            x += parse(Int,instruction[2])
-            y += aim*parse(Int,instruction[2])
+            x += value
+            y += aim*value
         elseif instruction[1]=="down"
-            aim += parse(Int,instruction[2])
+            aim += value
         elseif instruction[1]=="up"
-            aim -= parse(Int,instruction[2])
+            aim -= value
         end
     end
     x*y
