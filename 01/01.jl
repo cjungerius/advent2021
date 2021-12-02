@@ -1,22 +1,10 @@
 function depth(input)
-    depth = input[1]
-    increases = 0
-    for i in input[2:end]
-        increases += i > depth
-        depth = i
-    end     
-    increases  
+    sum(map(Base.splat(<), zip(input,input[2:end])))
 end
 
 function windowdepth(input)
-    depth = sum(input[1:3])
-    increases = 0
-    for i in 2:length(input)-2
-        newdepth = sum(input[i:i+2])
-        increases += newdepth > depth
-        depth = newdepth
-    end
-    increases
+    input = map(Base.splat(+), zip(input,input[2:end],input[3:end]))
+    depth(input)
 end
 
 
