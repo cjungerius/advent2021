@@ -1,5 +1,5 @@
 
-function fuelcodes2(input)
+function fuelcodes(input)
     epsilon = ""
     theta = ""
     for i in 1:length(input[1])
@@ -11,7 +11,7 @@ parse(Int,epsilon,base=2)*parse(Int,theta,base=2)
 end
 
 function lifesupportcodes(input)
-    
+
     o2codes = copy(input)
     o2 = ""
     for i in 1:length(o2codes[1])
