@@ -14,7 +14,7 @@ function fuelcodes(input)
         epsilon *= string(Int(value))
         theta *= string(Int(!value))
     end
-(parse(Int,theta,base=2)*parse(Int,epsilon,base=2))
+parse(Int,theta,base=2)*parse(Int,epsilon,base=2)
 end
 
 function lifesupportcodes(input)
@@ -40,7 +40,7 @@ function lifesupportcodes(input)
         end
     end
    
-    (parse(Int,o2,base=2)*parse(Int,co2,base=2))
+    parse(Int,o2,base=2)*parse(Int,co2,base=2)
 end
 
 
