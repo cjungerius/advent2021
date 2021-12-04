@@ -31,7 +31,7 @@ function bingo(input)
             rowsums = [sum(called[:,i,j]) for j in waiting]
             colsums = [sum(called[i,:,j]) for j in waiting]
 
-            winning = Set([findall(x->x==size(called)[2],rowsums)..., findall(x->x==size(called)[2],colsums)...])
+            winning = unique([findall(x->x==size(called)[2],rowsums)..., findall(x->x==size(called)[2],colsums)...])
             winning = [waiting[loc] for loc in winning]
 
             for winner in winning
