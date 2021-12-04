@@ -4,7 +4,7 @@ function bingo(input)
 
     card = []
     cards = []
-    winners = []
+    winvals = []
 
     for i in 3:length(input)
         if input[i] != ""
@@ -17,7 +17,7 @@ function bingo(input)
     end
     push!(cards,card)
     
-    waiting = Set([1:length(cards)...])
+    waiting = [1:length(cards)...]
     cards = cat([hcat(card...) for card in cards]...,dims=3)
     called = zeros(Bool,size(cards))
 
@@ -27,26 +27,25 @@ function bingo(input)
 
 
         for i in 1:size(called)[2]
-            rowsums = [sum(called[:,i,j]) for j in 1:size(called)[3]]
-            colsums = [sum(called[i,:,j]) for j in 1:size(called)[3]]
 
-            winning = [findall(x->x==size(called)[2],rowsums)..., findall(x->x==size(called)[2],colsums)...] 
+            rowsums = [sum(called[:,i,j]) for j in waiting]
+            colsums = [sum(called[i,:,j]) for j in waiting]
+
+            winning = Set([findall(x->x==size(called)[2],rowsums)..., findall(x->x==size(called)[2],colsums)...])
+            winning = [waiting[loc] for loc in winning]
 
             for winner in winning
-                if winner in waiting
-                    pop!(waiting, winner)
-                    push!(winners,val * sum(cards[:,:,winner] .* .!called[:,:,winner]))
-                end
-
+               filter!(x->x!=winner, waiting)
+               push!(winvals,val * sum(cards[:,:,winner] .* .!called[:,:,winner]))                
             end
+            
         end
     end
-    winners
-
+    winvals
 end
 
 input = readlines("input.txt")
 
-winorder  = bingo(input)
-partone = winorder[1]
-parttwo = winorder[end]
+winvals  = bingo(input)
+partone = winvals[1]
+parttwo = winvals[end]
