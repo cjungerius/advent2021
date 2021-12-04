@@ -1,5 +1,3 @@
-using Base: Bool
-
 function bingo(input)
 
     sequence = parse.(Int,split(input[1],","))
