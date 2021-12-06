@@ -2,8 +2,7 @@ function fishcount(input,cycles)
 
     input = parse.(Int,split(input,","))
     state = zeros(Int,9)
-    next = zeros(Int,9)
-
+    
     #initialize state
     for i in 1:9
         state[i] = count(x->x==i-1,input)
@@ -12,10 +11,9 @@ function fishcount(input,cycles)
     #perform updates
     for i in 1:cycles
 
-        next = circshift(state,-1)
-        next[7] += state[1]    
+        state = circshift(state,-1)
+        state[7] += state[end]
 
-        state = copy(next)
     end
 
 state
