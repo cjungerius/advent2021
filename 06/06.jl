@@ -38,7 +38,7 @@ function linalgfish(input,cycles)
     A[1,9] = 1
 
     #calc
-    state'A^cycles
+    A^cycles * state
 end   
 
 
