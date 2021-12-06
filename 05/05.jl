@@ -1,5 +1,3 @@
-using DelimitedFiles
-
 function vents(input; diag = false)
 	starts = []
 	stops = []
