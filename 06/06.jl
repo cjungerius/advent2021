@@ -32,10 +32,10 @@ function linalgfish(input,cycles)
     #transition matrix
     A = zeros(Int, (9,9))
     for i in 1:8
-        A[i+1,i] = 1
+        A[i,i+1] = 1
     end
-    A[1,7] = 1
-    A[1,9] = 1
+    A[7,1] = 1
+    A[9,1] = 1
 
     #calc
     A^cycles * state
