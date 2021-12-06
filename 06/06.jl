@@ -12,14 +12,9 @@ function fishcount(input,cycles)
     #perform updates
     for i in 1:cycles
 
-        next[end] = state[1]
-        for i in 1:8
-            next[i] = state[i+1]  
-            if i==7
-                next[i] += state[1]
-            end      
-        end
-        
+        next = circshift(state,-1)
+        next[7] += state[1]    
+
         state = copy(next)
     end
 
