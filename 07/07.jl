@@ -16,9 +16,20 @@ function parttwo(input)
     results = []
     for i in target-5:target+5
         result = triangular.(abs.(input.-i))
-        push!(results,result)
+        push!(results,sum(result))
     end
-    Int(minimum(sum.(results)))
+    Int(minimum(results))
+end
+
+function parttwogeneral(input)
+    #apparently the solution is not *guaranteed* to be near the mean (although it usually is), so to solve more generally:
+    triangular = x->x*(x+1)/2
+    results = []
+    for i in minimum(input):maximum(input)
+        result = triangular.(abs.(input.-i))
+        push!(results,sum(result))
+    end
+    Int(minimum(results))
 end
 
 input = readline("input.txt")
