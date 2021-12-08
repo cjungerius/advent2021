@@ -35,6 +35,18 @@ function decode(display)
 	decoder
 end
 
+function brutedecode(display)
+	groundtruth = ["abcefg","cf","acdeg","acdfg","bcdf","abdfg","abdefg","abcdefg","abcdfg"]
+	one, four, seven, eight = finduniquedigit.(Ref(display),[2 4 3 7])
+	groups = repeat([""],4)
+	groups[1] = one
+	groups[2] = filter(x->!(x in one), seven)
+	groups[3] = filter(x->!(x in one), four)
+	groups[4] = filter(x->!(x in four) && !(x in seven), eight)
+
+	groups
+end
+
 function convert(display, value)
 	display = sorting(display)
 	value = sorting(value)
