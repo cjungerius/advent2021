@@ -56,7 +56,7 @@ function brutedecode(display)
 
 				decoded = join.([sort(get.(Ref(cipher),[c for c in d],0)) for d in display])
 				
-				if all([d in plaintext for d in decoded])
+				if all(in.(decoded,Ref(plaintext)))
 
 					for i in 1:length(plaintext)
 						decoder[display[findall(x->x==plaintext[i],decoded)[1]]]  = i-1
