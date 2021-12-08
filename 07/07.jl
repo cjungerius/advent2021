@@ -36,7 +36,7 @@ function parttwogradient(x)
     #since the loss function is convex we can find the optimal solution using gradient descent too, if we wanted!
     η = 0.001
     loss(x,a) = sum( ( abs.(x.-a).^2 .+ abs.(x.-a) ) / 2 )
-    dloss(x,a) = sum(x.-a .+ 1/2)
+    dloss(x,a) = sum((x.-a) .+ 1/2)
 
     a = rand(minimum(x):maximum(x))
     as = []
