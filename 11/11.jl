@@ -1,12 +1,19 @@
 example = readlines("example.txt")
 example = split.(example,"")
 example = [parse.(Int,line) for line in example]
-example = hcat(example...)'
+example = hcat(example...)
+
+input = readlines("input.txt")
+input = split.(input,"")
+input = [parse.(Int,line) for line in input]
+input = hcat(input...)
+
+
 
 function getneighbours(input,idx)
 	y = idx[1]
 	x = idx[2]
-	candidates = [(y-1,x-1),(y,x-1),(y+1,x-1),(y-1,x),(y+1,x),(y-1,x+1),(y,x+1),(y,x+1)]
+	candidates = [(y-1,x-1),(y,x-1),(y+1,x-1),(y-1,x),(y+1,x),(y-1,x+1),(y,x+1),(y+1,x+1)]
 	neighbourlist = []	
 	for (a,b) in candidates
 		if 0 < a <= size(input)[1] && 0 < b <= size(input)[2]
@@ -32,8 +39,6 @@ for s in 1:steps
 				push!(flashers,newflasher)
 				neighbours = getneighbours(input,newflasher)
 				for neighbour in neighbours
-					println(neighbour)
-					println(input[neighbour])
 					input[neighbour] += 1
 				end
 			end	
@@ -46,7 +51,17 @@ for s in 1:steps
 	end
 
 end
-input
+flashes
 end
+
+function sync!(input)
+	steps = 0
+	while sum(input) != 0
+		step!(input,1)
+		steps +=1
+	end
+	return steps
+end
+
 
 
