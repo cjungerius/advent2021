@@ -25,7 +25,7 @@ function basinsearch(input,start)
 	visited = Set([start])
 	q = [start]
 	while length(q) > 0
-		current = pop!(q)
+		current = popfirst!(q)
 		neighbourlist = neighbours(input,current)
 		for neighbour in neighbourlist
 			if !(neighbour in visited) && input[current] < input[neighbour] < 9 
