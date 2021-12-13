@@ -41,3 +41,13 @@ end
 (points, instructions) = preprocess("input.txt")
 
 fold!.(Ref(points),instructions)
+
+image = fill(' ',(maximum([point[2] for point in points])+1,maximum([point[1] for point in points])+1))
+
+for point in points
+	image[point[2]+1,point[1]+1] = '#'
+end
+
+for i in 1:size(image)[1]
+	println(join(image[i,:]))
+end
