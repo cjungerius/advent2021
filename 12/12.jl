@@ -35,36 +35,50 @@ function paths(input)
 end
 
 
-function dfs(adjmat, bigcaves, current, visited::Array{Bool})
-    pathcount = 0
-    visited[current] = true
-    if current == size(adjmat)[1]
-        pathcount += 1
+function dfs(adjmat, bigcaves, current, visited::Array{Bool},memo=Dict([]))
+    
+    if haskey(memo,(current,visited))
+        return memo[(current,visited)]
     else
-        for neighbour in findall(adjmat[current,:])
-            if neighbour in bigcaves || !(visited[neighbour])
-                pathcount += dfs(adjmat, bigcaves, neighbour, visited)            
+        key = (current, copy(visited))
+        pathcount = 0
+        visited[current] = true
+
+        if current == size(adjmat)[1]
+            pathcount += 1
+        else
+            for neighbour in findall(adjmat[current,:])
+                if neighbour in bigcaves || !(visited[neighbour])
+                    pathcount += dfs(adjmat, bigcaves, neighbour, visited,memo)            
+                end
             end
         end
+        visited[current] = false
+        memo[key] = pathcount
+        pathcount
     end
-    visited[current] = false
-    pathcount
 end
 
-function dfs(adjmat, bigcaves, smallcaves, current, visited::Array{Int64})
-    pathcount = 0
-    visited[current] += 1
-    if current == size(adjmat)[1]
-        pathcount += 1
+function dfs(adjmat, bigcaves, smallcaves, current, visited::Array{Int64}, memo=Dict([]))
+    if haskey(memo,(current,visited))
+       return memo[(current,visited)]
     else
-        for neighbour in findall(adjmat[current,:])
-            if neighbour in bigcaves || visited[neighbour] == 0 || neighbour != 1 && maximum(visited[smallcaves]) < 2
-                pathcount += dfs(adjmat, bigcaves, smallcaves, neighbour, visited)            
+        key = (current,copy(visited))
+        pathcount = 0
+        visited[current] += 1
+        if current == size(adjmat)[1]
+            pathcount += 1
+        else
+            for neighbour in findall(adjmat[current,:])
+                if neighbour in bigcaves || visited[neighbour] == 0 || neighbour != 1 && maximum(visited[smallcaves]) < 2
+                    pathcount += dfs(adjmat, bigcaves, smallcaves, neighbour, visited,memo)            
+                end
             end
         end
+        visited[current] -= 1
+        memo[key] = pathcount
+        pathcount
     end
-    visited[current] -= 1
-    pathcount
 end
 
 
