@@ -39,7 +39,7 @@ function dfs(adjmat, bigcaves, current, visited::Array{Bool})
     pathcount = 0
     visited[current] = true
     if current == size(adjmat)[1]
-        amt += 1
+        pathcount += 1
     else
         for neighbour in findall(adjmat[current,:])
             if neighbour in bigcaves || !(visited[neighbour])
