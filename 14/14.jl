@@ -55,15 +55,48 @@ function polydict(chain, chaindict, n=1)
 	lettercount
 end
 
+function polymatrix(chain, chaindict, n=1)
+	polyboth(pair) = [pair[1] * chaindict[pair], chaindict[pair] * pair[2]]
+	lastchar = string(chain[end])
+
+	idxdict = Dict(key=> i for (i, key) in enumerate(keys(chaindict)))
+	lettercountdict = Dict(idxdict[key]=>string(key[1]) for key in keys(idxdict))
+	outputdict = Dict(letter => 0 for letter in unique(values(chaindict)))
+
+	input = zeros(Int,length(keys(chaindict)))
+
+	for pair in zip(chain,chain[2:end])
+		input[idxdict[join(pair)]] += 1
+	end
+
+	[idxdict[join(pair)] for pair in zip(chain,chain[2:end])]
+	adjmat = zeros(Int,length(keys(chaindict)),length(keys(chaindict)))
+
+	for key in keys(idxdict)
+		result = polyboth(key)
+		adjmat[idxdict[result[1]],idxdict[key]] = 1
+		adjmat[idxdict[result[2]],idxdict[key]] = 1
+	end
+	adjmat = adjmat^n
+	output = adjmat*input
+
+	[outputdict[lettercountdict[i]] += output[i] for i in 1:length(output)]
+	outputdict[lastchar] += 1
+	outputdict
+
+end
+
 chain, chaindict = preprocess("input.txt")
 
 naivesolution = polynaive(chain,10)
 dictsolution = polydict(chain,chaindict,10)
+matsolution = polymatrix(chain,chaindict,10)
 
 #confirm that the dictsolution finds the same answers
-println(sort(collect(values(countmap(naivesolution)))) == sort(collect(values(dictsolution))))
+println(sort(collect(values(countmap(naivesolution)))) == sort(collect(values(dictsolution))) == sort(collect(values(matsolution))))
 
 
 partone = maximum(values(dictsolution)) - minimum(values(dictsolution))
 dictsolution = polydict(chain,chaindict,40)
+
 parttwo = maximum(values(dictsolution)) - minimum(values(dictsolution))
