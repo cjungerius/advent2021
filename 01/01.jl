@@ -1,9 +1,9 @@
 function depth(input)
-    sum(map(Base.splat(<), zip(input,input[2:end])))
+    sum(map(x-><(x...), zip(input,input[2:end])))
 end
 
 function windowdepth(input)
-    input = map(Base.splat(+), zip(input,input[2:end],input[3:end]))
+    input = map(x->+(x...), zip(input,input[2:end],input[3:end]))
     depth(input)
 end
 
