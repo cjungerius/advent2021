@@ -1,4 +1,4 @@
-using Datastructures
+using DataStructures
 
 input = readlines("input.txt")
 input = split.(input,"")
