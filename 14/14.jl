@@ -69,7 +69,6 @@ function polymatrix(chain, chaindict, n=1)
 		input[idxdict[join(pair)]] += 1
 	end
 
-	[idxdict[join(pair)] for pair in zip(chain,chain[2:end])]
 	adjmat = zeros(Int,length(keys(chaindict)),length(keys(chaindict)))
 
 	for key in keys(idxdict)
@@ -83,7 +82,6 @@ function polymatrix(chain, chaindict, n=1)
 	[outputdict[lettercountdict[i]] += output[i] for i in 1:length(output)]
 	outputdict[lastchar] += 1
 	outputdict
-
 end
 
 chain, chaindict = preprocess("input.txt")
