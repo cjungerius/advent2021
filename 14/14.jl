@@ -93,7 +93,6 @@ matsolution = polymatrix(chain,chaindict,10)
 #confirm that the dictsolution finds the same answers
 println(sort(collect(values(countmap(naivesolution)))) == sort(collect(values(dictsolution))) == sort(collect(values(matsolution))))
 
-
 partone = maximum(values(dictsolution)) - minimum(values(dictsolution))
 dictsolution = polydict(chain,chaindict,40)
 
