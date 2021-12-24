@@ -1,17 +1,16 @@
 import JSON
 
 function magnitude(a,b)
-	if length(a) == 1 && length(b) == 1
-		return 3*a+2*b
-	elseif length(a) == 1
-		return 3*a+2*magnitude(b...)
-	elseif length(b) == 1
-		return 3*magnitude(a...)+2*b
-	else
-		return 3*magnitude(a...)+2*magnitude(b...)
-	end
+		3*magnitude(a...)+2*magnitude(b...)
 end
 
+function magnitude(a::Int,b::Int)
+	3*a+2*b
+end
+
+function magnitude(a::Int)
+	a
+end
 
 function stringreduction(line)
 
