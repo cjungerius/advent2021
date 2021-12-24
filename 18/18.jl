@@ -62,28 +62,25 @@ function explode(line)
 	end
 	expindex = findfirst(x->x>=5,levels)
 	if !isnothing(expindex)
-		newline = copy(line)
 		idxa = idxs[expindex]
 		idxb = idxa+2
 		a = line[idxa]
 		b = line[idxb]
-		expindex>1 && (newline[idxs[expindex-1]] += a)
-		expindex<(length(idxs)-1) && (newline[idxs[expindex+2]] += b)
-		newline = vcat(newline[1:idxa-2],[0],newline[idxb+2:end])
-		return newline
+		expindex>1 && (line[idxs[expindex-1]] += a)
+		expindex<(length(idxs)-1) && (line[idxs[expindex+2]] += b)
+		line = vcat(line[1:idxa-2],[0],line[idxb+2:end])
 	end
 	line
 end
 
 function splitting(line)
-	newline = copy(line)
-	idxs = findall(x->typeof(x)==Int,newline)
+	idxs = findall(x->typeof(x)==Int,line)
 	for i in idxs
-		if newline[i] >= 10
-			a = floor(Int,newline[i]/2)
-			b = ceil(Int,newline[i]/2)
-			newline = vcat(newline[1:i-1],["["],[a],",",[b],"]",newline[i+1:end])
-			return newline
+		if line[i] >=10
+			a = floor(Int,line[i]/2)
+			b = ceil(Int,line[i]/2)
+			line = vcat(line[1:i-1],["["],[a],",",[b],"]",line[i+1:end])
+			return line
 		end
 	end
 	line
