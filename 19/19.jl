@@ -70,9 +70,13 @@ function findbeacons(input)
 	scanners = [[0,0,0]]
 	seen = Set([input[1][i,:] for i in 1:size(input[1])[1]])
 	visited = Set([1])
+	searchidx = 1
 
 	while length(visited)<length(input)
-		matches, orders, rotations, translations = findscannerorder(beacons,input,visited)
+		println(searchidx)
+		matches, orders, rotations, translations = findscannerorder(beacons[searchidx:end,:],input,visited)
+		searchidx = size(beacons)[1]
+		println(matches)
 		for (i,m) in enumerate(matches)
 			(m in visited) && continue
 			push!(visited,m)
@@ -86,7 +90,7 @@ function findbeacons(input)
 			end
 		end
 	end
-	(scanners,beacons)
+	(scanners,seen)
 end
 
 scanners, beacons = findbeacons(input)
@@ -97,5 +101,5 @@ for i in scanners, j in scanners
 	biggestdist = max(biggestdist,sum(abs.(i.-j)))
 end
 
-partone = size(beacons)[1]
+partone = length(beacons)
 parttwo = biggestdist
