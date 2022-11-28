@@ -17,15 +17,38 @@ function partone(input)
     length(active_cubes)
 end
 
+# struct Cube
+#     x_min::Int
+#     x_max::Int
+#     y_min::Int
+#     y_max::Int
+#     z_min::Int
+#     z_max::Int
+#     value::Int
+# end
+
+# function intersect(a::Cube, b::Cube)
+#     xspan = intersect(a.x_min:a.x_max,b.x_min:b.x_max)
+#     yspan = intersect(a.y_min:a.y_max,b.y_min:b.y_max)
+#     zspan = intersect(a.z_min:a.z_max,b.z_min:b.z_max)
+
+#     if any(x->x==0,length.([xspan,yspan,zspan]))
+#         return nothing
+#     end
+
+#     value = -b.value
+
+# end
+
 function parttwo(input)
-    active_cubes = Set()
+    active_cubes = []
     for line in input
         rx = r"(-?[0-9]+)"
         m = eachmatch(rx,line)
         coords = parse.(Int,[x.captures[1] for x in m])
-        value = line[1:2] == "on" ? 1 : 0
+        value = line[1:2] == "on" ? 1 : -1
         new_cube = [coords..., value]
-        intersect_cubes = Set()
+        intersect_cubes = []
         for cube in active_cubes
             intersection = [
                 intersect(cube[1]:cube[2],new_cube[1]:new_cube[2]),
@@ -39,15 +62,19 @@ function parttwo(input)
                 ]
             status = cube[7] * new_cube[7]
             if cube[7] == new_cube[7]
-                status = -new_cube[7]
-            elseif new_cube[7] == 1 && cube[7] == -1
+                status = -cube[7]
+            elseif cube[7] == -1 && new_cube[7] == 1
                 status = 1
             end
+
             push!(intersect_cube, status)
             push!(intersect_cubes,intersect_cube)
             end
+        
         end
-        push!(active_cubes,new_cube)
+        if new_cube[7] == 1
+            push!(active_cubes,new_cube)
+        end
         if length(intersect_cubes) > 0
             push!(active_cubes,intersect_cubes...)
         end
@@ -55,8 +82,9 @@ function parttwo(input)
 
     result = 0
     for cube in active_cubes
-        cube_size = (cube[2]-cube[1]+1) * (cube[4] - cube[3]+1) * (cube[6] - cube[5])
-        cube_val = abs(cube_size) * cube[7]
+        cube_size = (cube[2]-cube[1]+1) * (cube[4] - cube[3]+1) * (cube[6] - cube[5] + 1)
+        cube_val = cube_size * cube[7]
+        println(result, " + " , cube_val, " = ", result+cube_val)
         result += cube_val
     end
   result
